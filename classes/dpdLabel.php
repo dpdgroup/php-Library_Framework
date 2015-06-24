@@ -21,6 +21,11 @@ class dpdLabel {
   const jpg = 6;
   
   /**
+   * Parent ID (eg: libraryUID)
+   * @var string $parentId
+   */
+  public $parentId;
+  /**
    * Human readable text.
    * @var string $label
    */

@@ -114,11 +114,8 @@ class DpdParcelLifeCycle
 			}
 			$stop = true;
 		}
-
-		foreach($result->trackingresult as $tracking)
-		{
-			$this->results[$data['parcellabelnumber']] = $tracking;
-		}
+    
+		$this->results[$data['parcellabelnumber']] = $result->trackingresult;
 		
 		return $result->trackingresult;
 	}

@@ -354,7 +354,7 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
     
     if(!empty($lifeCycle->results[$label->number])){
       $result = array();
-      foreach($lifeCycle->results[$label->number]["trackingresult"]["statusInfo"] as $status) {
+      foreach($lifeCycle->results[$label->number]->statusInfo as $status) {
         $event = new dpdEvent();
         switch($status->status) {
           case "ACCEPTED":
@@ -374,6 +374,11 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
             break;
         }
         $event->description = $status->description->content->content;
+        if(isset($status->date->content)){
+          $time_string = $status->date->content; // 01/06/2012, 02:09 
+          $event->time = DateTime::createFromFormat ( "d/m/Y, H:i " , $time_string );
+        }
+        $result[] = $event;
       }
     }
     

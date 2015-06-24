@@ -122,6 +122,36 @@ class dpdLibrary {
   }
   
   /**
+   * Get information about an order
+   * @param dpdLabel $label
+   * @result dpdEvent[]
+   */
+  public function getInfo(dpdLabel $label) {
+    $selected = $this->loadLibraries(array($label->parentId));
+    $library_name = $selected[$label->parentId];
+    $class = new $library_name($this->config, $this->cache);
+    $result = $class->getInfo($label);
+    return $result;
+  }
+  
+  /**
+   * Get information about multiple orders
+   * Please do not over use this function, could stress the web services
+   * @param dpdLabel[] $labels
+   * @result array[dpdEvent[]]
+   */
+  public function getInfos(array $labels) {
+    $result = array();
+    foreach ($labels as $label) {
+      $info = $this->getInfo($label);
+      if($info) {
+        $result[] = $info;
+      }
+    }
+    return $result;
+  }
+  
+  /**
    * Load the selected libaries
    * @param array $libaries An array of library UIDs
    * @return array[ UID => classname ]

@@ -21,7 +21,7 @@ class dpdEvent {
 
   /**
    * The time of the event
-   * @var int $time
+   * @var DateTime $time
    */
   public $time;
   
@@ -39,7 +39,7 @@ class dpdEvent {
    * @param array $data
    * @return dpdEvent
    */
-  public function __construct($data){
+  public function __construct($data = array()){
     if (is_array($data)){ 
       foreach($data as $key => $value){ 
         if(property_exists($this, $key)){ 
