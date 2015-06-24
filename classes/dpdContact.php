@@ -22,6 +22,10 @@ class dpdContact {
    */
   public $last_name;
   /**
+   * @var string $last_name
+   */
+  public $company;
+  /**
    * @var string $phone
    */
   public $phone;

@@ -82,9 +82,9 @@ class dpdLibrary {
   public function getShops(dpdLocation $location, $limit = 10, $libraries = false) {
     $selected = $this->loadLibraries($libraries);
     $result = array();
-    foreach($selected as $library_name) {
+    foreach($selected as $UID => $library_name) {
       $class = new $library_name($this->config, $this->cache);
-      $result[] = $class->getShops($location, $limit);
+      $result[$UID] = $class->getShops($location, $limit);
     }
     return $result;
   }

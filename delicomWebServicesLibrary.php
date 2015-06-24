@@ -279,7 +279,7 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
     // Add parcel data
     foreach($order->parcels as $parcel) {
       $shipment->request["order"]["parcels"][] = array(
-        "weight" => $parcel->weight
+        "weight" => $parcel->weight * 10
       );
     }
     
@@ -342,7 +342,7 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
    * Get T&T for a Label/Label Number
    * 
    * @param dpdLabel $label
-   * @return (dpdTracking|false)
+   * @return (dpdEvent|false)
    */
   public function getInfo(dpdLabel $label) {
     $login = $this->getLogin();
@@ -380,9 +380,10 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
         }
         $result[] = $event;
       }
+      return $result;
     }
     
-    return $result;
+    return false;
   }
   
   private function getLogin() {

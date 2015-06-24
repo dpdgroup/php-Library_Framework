@@ -58,6 +58,10 @@ $config->delis_id = "";  // your DelisID
 $config->delis_password = ""; // your password
 $config->delis_server = 0;
 $config->time_logging = 1;
+$config->pc_name = "";
+$config->pc_token = "";
+$config->uc_cloud_user_id = "";
+$config->uc_token = "";
 
 // Create library
 $main = new dpdLibrary($config, $cache);
@@ -105,11 +109,20 @@ $order->receiver = new dpdContact( array(
 ));
 $order->parcels = array(
   new dpdParcel( array(
-    "weight" => "100"
+    "weight" => "10"
   ))
 );
-$order->service = $services["DWS"][0];
+$order->service = $services["DCS"][0];
 
 var_dump($order);
 
 var_dump($main->getLabel($order));
+
+/**
+ * getInfo example
+ */
+$label = new dpdLabel(array( 
+  "parentId" => "DCS"
+  ,"number" => "01305048685208"
+));
+var_dump($main->getInfo($label));
