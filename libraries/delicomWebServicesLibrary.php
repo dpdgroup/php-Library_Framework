@@ -10,7 +10,7 @@
 
 require_once("interfaces/dpdLibraryInterface.php");
 
-foreach (glob("DWS/*.php") as $filename)
+foreach (glob("libraries/DWS/*.php") as $filename)
 {
   require_once($filename);
 }
