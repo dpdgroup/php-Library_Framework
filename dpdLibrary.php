@@ -19,7 +19,7 @@ class dpdLibrary {
   static function getLibraries() {
     $dir_path = dirname(__FILE__);
     $result = array();
-    foreach (glob("*.php") as $filename)
+    foreach (glob("libraries" . DS . "*.php") as $filename)
     {
       if($filename != basename(__FILE__)
         && $filename != "index.php") {
@@ -74,17 +74,17 @@ class dpdLibrary {
   // Reminder: I didn't make this static because it needs the Config and Cache objects.
   /**
    * Get shops for all or specific libraries
-   * @param dpdLocation $location A location object with address or long lat set.
+   * @param dpdService $service the service that calls for the function
    * @param int $limit Amount of shops returned (per library)
    * @param array $libraries array of libary UIDs
    * @result array[UID => dpdShop[]]
    */
-  public function getShops(dpdLocation $location, $limit = 10, $libraries = false) {
-    $selected = $this->loadLibraries($libraries);
+  public function getShops(dpdService $service, dpdLocation $location, $limit = 10) {
+    $selected = $this->loadLibraries(array($service->parentId));
     $result = array();
     foreach($selected as $UID => $library_name) {
       $class = new $library_name($this->config, $this->cache);
-      $result[$UID] = $class->getShops($location, $limit);
+      $result[$UID] = $class->getShops($service, $location, $limit);
     }
     return $result;
   }
@@ -169,7 +169,7 @@ class dpdLibrary {
     }
     $dir_path = dirname(__FILE__);
     foreach($selected as $library_name) {
-      require_once($dir_path . DS . $library_name . ".php");
+      require_once($dir_path . DS  . "libraries" . DS . $library_name . ".php");
     }
     return $selected;
   }

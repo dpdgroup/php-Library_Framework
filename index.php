@@ -76,7 +76,7 @@ $location = new dpdLocation(array(
 ));
 
 // Dump results.
-var_dump($main->getShops($location));
+var_dump($main->getShops($services["DCS"][0], $location));
 
 /**
  * Order example
