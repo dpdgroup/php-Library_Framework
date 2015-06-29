@@ -7,8 +7,14 @@
  * @copyright  2015 Michiel Van Gucht
  * @license    LGPL
  */
- 
+
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
+$dir_path = dirname(__FILE__);
+
+foreach (glob($dir_path . DS . "classes" . DS . "*.php") as $filename)
+{
+  require_once($filename);
+}
 
 class dpdLibrary {
   
@@ -19,15 +25,16 @@ class dpdLibrary {
   static function getLibraries() {
     $dir_path = dirname(__FILE__);
     $result = array();
-    foreach (glob("libraries" . DS . "*.php") as $filename)
+    foreach (glob($dir_path . DS . "libraries" . DS . "*.php") as $file_path)
     {
-      if($filename != basename(__FILE__)
-        && $filename != "index.php") {
-        $class_name = basename($filename, ".php");
-
-        require_once($dir_path . DS . $filename);
-        $result[$class_name::UID] = $class_name;
-      }
+      // Require the file just to be sure
+      require_once($file_path);
+      
+      // Get the file name (without extension .php)
+      $class_name = basename($file_path, ".php");
+      
+      // Save it  to the result
+      $result[$class_name::UID] = $class_name;
     }
     return $result;
   }

@@ -8,6 +8,7 @@
 * @license    LGPL
 */
 require_once("dpdLibrary.php");
+require_once("interfaces/dpdCacheInterface.php");
 
 /**
  * Require all special dpd objects
@@ -76,7 +77,7 @@ $location = new dpdLocation(array(
 ));
 
 // Dump results.
-var_dump($main->getShops($services["DCS"][0], $location));
+var_dump($main->getShops($services["DCS"][1], $location));
 
 /**
  * Order example

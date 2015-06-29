@@ -13,12 +13,13 @@ require_once("dpdException.php");
 
 class dpdService {
 
-  const classic     = 0;
-  const parcelshop  = 1;
-  const saturday    = 2;
-  const sunday      = 3;
-  const same_day    = 4;
-  const express     = 5;
+  const classic     = 1;
+  const parcelshop  = 2;
+  const retour      = 3;
+  const saturday    = 4;
+  const sunday      = 5;
+  const same_day    = 6;
+  const express     = 7;
   
   /**
    * Parent ID (eg: libraryUID)

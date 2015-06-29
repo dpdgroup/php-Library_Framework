@@ -8,9 +8,13 @@
 * @license    LGPL
 */
 
-require_once("interfaces/dpdLibraryInterface.php");
+defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 
-foreach (glob("libraries/DWS/*.php") as $filename)
+$dir_path = dirname(__FILE__);
+
+require_once($dir_path . DS . ".." . DS . "interfaces" . DS . "dpdLibraryInterface.php");
+
+foreach (glob($dir_path . DS . "DWS" . DS . "*.php") as $filename)
 {
   require_once($filename);
 }
@@ -21,7 +25,7 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
    * Unique identifier for the class.
    */
   const UID = "DWS";
-  
+
   /**
    * @param stdObject $config The actual configuration.
    * @param dpdCache $cache A simple cache object to save and retreive data.
@@ -98,6 +102,7 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
    * Get the service that the shipper can use
    * eg: Classic, Predict, Pickup ...
    * These services will define what is visible in the checkout
+   * @todo
    * @return dpdService[]
    */
   static function getServices(){
@@ -118,6 +123,14 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
       ,"type" => dpdService::parcelshop
       ,"validate" => function($order){return true;}
     ));
+    $result[] = new dpdService( array(
+      "parentId" => self::UID
+      ,"label" => "Pickup Return"
+      ,"description" => "Something wrong? Not what you hoped for? Return in via one of our Pickup points"
+      ,"name" => "retour" 
+      ,"type" => dpdService::retour
+      ,"validate" => function($order){return true;}
+    ));
     return $result;
   }
   
@@ -131,6 +144,11 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
    * @return (dpdShop[]|false)
    */
   public function getShops(dpdService $service, dpdLocation $location, $limit = 10) {
+    if(! ($service->type == dpdService::parcelshop 
+      || $service->type == dpdService::retour )) {
+      return false;
+    }
+    
     if(empty($location->lng) || empty($location->lat)) {
       $location->parseData();
     }

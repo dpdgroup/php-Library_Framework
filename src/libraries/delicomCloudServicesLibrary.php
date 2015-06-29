@@ -8,7 +8,11 @@
 * @license    LGPL
 */
 
-require_once("interfaces/dpdLibraryInterface.php");
+defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
+
+$dir_path = dirname(__FILE__);
+
+require_once($dir_path . DS . ".." . DS . "interfaces" . DS . "dpdLibraryInterface.php");
 
 class delicomCloudServicesLibrary implements dpdLibraryInterface {
   
@@ -132,6 +136,10 @@ class delicomCloudServicesLibrary implements dpdLibraryInterface {
    * @return (dpdShop[]|false)
    */
   public function getShops(dpdService $service, dpdLocation $location, $limit = 10) {
+    if($service->type != dpdService::parcelshop) {
+      return false;
+    }
+    
     if(empty($location->lng) || empty($location->lat)) {
       $location->parseData();
     }
@@ -171,7 +179,7 @@ class delicomCloudServicesLibrary implements dpdLibraryInterface {
     if($shopFinder->getParcelShopFinderResult->ResultCounter == 0) {
       return false;
     }
-    
+    // @todo: fix issue when limit is set to 1 !!
     foreach($shopFinder->getParcelShopFinderResult->ParcelShopList->ParcelShop as $shop){
       $newShop = new dpdShop(array(
         "id" => $shop->ParcelShopID
