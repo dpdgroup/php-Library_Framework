@@ -76,7 +76,9 @@ class dpdShop {
   public function __construct($data){
     if (is_array($data)){ 
       foreach($data as $key => $value){ 
-        if(property_exists($this, $key)){ 
+        if($key == "services"){
+          $this->addServices($value);
+        } elseif(property_exists($this, $key)){ 
           $this->$key = $value; 
         } 
       } 
