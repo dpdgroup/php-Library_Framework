@@ -66,6 +66,11 @@ class dpdShop {
    * @val string $image_url
    */
   public $image_url;
+    /**
+   * The cost of shipping to this point
+   * @val float $cost
+   */
+  public $cost;
   
   /**
    * A representation of all the (dpd) services this shop offers
