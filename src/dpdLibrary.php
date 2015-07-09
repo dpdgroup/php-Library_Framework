@@ -81,18 +81,33 @@ class dpdLibrary {
   // Reminder: I didn't make this static because it needs the Config and Cache objects.
   /**
    * Get shops for all or specific libraries
-   * @param dpdService $service the service that calls for the function
    * @param int $limit Amount of shops returned (per library)
    * @param array $libraries array of libary UIDs
-   * @result array[UID => dpdShop[]]
+   * @param dpdService|array $service the service(s)
+   * @result array[UID] => dpdShop[]
    */
-  public function getShops(dpdService $service, dpdLocation $location, $limit = 10) {
-    $selected = $this->loadLibraries(array($service->parentId));
+  public function getShops(dpdLocation $location, $limit = 10, $services = null) {
     $result = array();
-    foreach($selected as $UID => $library_name) {
-      $class = new $library_name($this->config, $this->cache);
-      $result[$UID] = $class->getShops($service, $location, $limit);
+    
+    $grouped_services;
+    if($services == null) {
+      $grouped_services = $this->getServices();
+    } else {
+      $grouped_services = array();
+      foreach($services as $service) {
+        $grouped_services[$service->parentId][] = $service;
+      }
     }
+    
+    foreach($grouped_services as $UID => $services){
+      $selected = $this->loadLibraries(array($UID));
+      
+      foreach($selected as $UID => $library_name) {
+        $class = new $library_name($this->config, $this->cache);
+        $result[$UID] = $class->getShops($location, $limit, $services);
+      }
+    }
+
     return $result;
   }
   

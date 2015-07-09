@@ -44,12 +44,12 @@ interface dpdLibraryInterface {
   * Get a list of parcelshops close to a given location.
   * This function should use the address details or the geolocation from the dpdLocation object.
   * TIP: If possible map the address to geolocation for an optimal location lookup.
-  * @param dpdService $service the service that calls for the function
   * @param dpdLocation $location location to look up.
   * @param integer $limit the maximum amount of shops to return
-  * @return dpdShop[] 
+  * @param dpdService[] $services This filters the result to certain services (defined by getServices)
+  * @return (dpdShop[]|false)
   */
-  public function getShops(dpdService $service, dpdLocation $location, $limit);
+  public function getShops(dpdLocation $location, $limit, array $services);
   
   /**
   * Get label(s) for a single order.

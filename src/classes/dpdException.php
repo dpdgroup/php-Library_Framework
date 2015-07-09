@@ -10,7 +10,7 @@
 class dpdException extends Exception
 {
   /**
-  * @todo add remote error reportin to constructor :)
+  * @todo add remote error reporting to constructor :)
   * @return dpdException
   */
   public function __construct($message, $code = 0, Exception $previous = null) {

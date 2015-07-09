@@ -130,15 +130,18 @@ class delicomCloudServicesLibrary implements dpdLibraryInterface {
    * Get a list of parcelshops close to a given location.
    * This function should use the address details or the geolocation from the dpdLocation object.
    * TIP: If possible map the address to geolocation for an optimal location lookup.
-   * @param dpdService $service the service that calls for the function
    * @param dpdLocation $location location to look up.
    * @param integer $limit the maximum amount of shops to return
+   * @param dpdService[] $services This filters the result to certain services (defined by getServices)
    * @return (dpdShop[]|false)
    */
-  public function getShops(dpdService $service, dpdLocation $location, $limit = 10) {
-    if($service->type != dpdService::parcelshop) {
+  public function getShops(dpdLocation $location, $limit = 10, array $services = null) {
+    /*
+    if($service =! null 
+      && $service->type != dpdService::parcelshop) {
       return false;
     }
+    */
     
     if(empty($location->lng) || empty($location->lat)) {
       $location->parseData();

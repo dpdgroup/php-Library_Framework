@@ -77,7 +77,7 @@ $location = new dpdLocation(array(
 ));
 
 // Dump results.
-var_dump($main->getShops($services["DCS"][1], $location));
+var_dump($main->getShops($location, 10));
 
 /**
  * Order example
@@ -106,7 +106,7 @@ $order->receiver = new dpdContact( array(
     ,"country_A2" => "BE"
   ))
   ,"email" => "michiel.vangucht@dpd.be"
-  ,"language" => "NL"
+  ,"language" => "nl_BE"
 ));
 $order->parcels = array(
   new dpdParcel( array(
