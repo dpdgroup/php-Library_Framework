@@ -95,7 +95,8 @@ class clickAndCollectLibrary implements dpdLibraryInterface{
     ));
 
     $result[] = new dpdShop(array(
-      "id" => "001"
+      "parentId" => self::UID
+      ,"id" => "001"
       ,"active" => true
       ,"name" => "My Test Shop"
       ,"location" => new dpdLocation(array(

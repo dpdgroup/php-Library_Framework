@@ -27,6 +27,11 @@ class dpdShop {
   const online   = 0x40;
   
   /**
+   * Parent ID (eg: libraryUID)
+   * @var string $parentId
+   */
+  public $parentId;
+  /**
    * Id used to identify this shop in the order
    * @val string $id
    */

@@ -160,6 +160,7 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
     $shopFinder->search(array(
       "long" => $location->lng
       ,"lat" => $location->lat
+      ,"limit" => $limit
     ));
     
     $result = array();
@@ -176,7 +177,8 @@ class delicomWebServicesLibrary implements dpdLibraryInterface {
     
     foreach($shopFinder->results as $shop){
       $newShop = new dpdShop(array(
-        "id" => $shop->parcelShopId
+        "parentId" => self::UID
+        ,"id" => $shop->parcelShopId
         ,"active" => true
         ,"name" => $shop->company
         ,"location" => new dpdLocation(array(

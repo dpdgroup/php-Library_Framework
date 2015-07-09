@@ -185,7 +185,8 @@ class delicomCloudServicesLibrary implements dpdLibraryInterface {
     // @todo: fix issue when limit is set to 1 !!
     foreach($shopFinder->getParcelShopFinderResult->ParcelShopList->ParcelShop as $shop){
       $newShop = new dpdShop(array(
-        "id" => $shop->ParcelShopID
+        "parentId" => self::UID
+        ,"id" => $shop->ParcelShopID
         ,"active" => true
         ,"name" => $shop->ShopAddress->Company
         ,"location" => new dpdLocation(array(
